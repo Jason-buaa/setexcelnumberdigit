@@ -7,18 +7,15 @@
 
 Office.onReady((info) => {
   if (info.host === Office.HostType.Excel) {
-    document.getElementById("sideload-msg").style.display = "none";
     document.getElementById("app-body").style.display = "flex";
     document.getElementById("run").onclick = run;
 
-    // Add real-time validation for the range input
+    // Real-time validation for the range input
     const rangeInput = document.getElementById("range-input");
     const validationMessage = document.getElementById("range-validation");
 
     rangeInput.addEventListener("input", () => {
       const input = rangeInput.value;
-
-      // Regular expression to validate Excel range (e.g., A1, A1:B10, etc.)
       const rangeRegex = /^[A-Z]+[1-9][0-9]*(:[A-Z]+[1-9][0-9]*)?$/;
 
       if (input === "" || rangeRegex.test(input)) {
@@ -45,15 +42,13 @@ export async function run() {
     await Excel.run(async (context) => {
       const sheet = context.workbook.worksheets.getActiveWorksheet();
       const rangeInput = document.getElementById("range-input").value.trim();
-      const decimalPlaces = document.getElementById("decimal-slider").value; // Get decimal places from slider
+      const decimalPlaces = document.getElementById("decimal-slider").value;
       let range;
 
       if (rangeInput === "") {
-        // Use the entire used range if no input is provided
-        range = sheet.getUsedRange();
+        range = sheet.getUsedRange(); // Use the entire used range if no input is provided
       } else {
-        // Use the range specified in the input
-        range = sheet.getRange(rangeInput);
+        range = sheet.getRange(rangeInput); // Use the range specified in the input
       }
 
       // Load the values and number formats of the range
