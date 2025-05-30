@@ -29,6 +29,14 @@ Office.onReady((info) => {
         validationMessage.style.color = "red";
       }
     });
+
+    // Update the displayed decimal places value when the slider is moved
+    const slider = document.getElementById("decimal-slider");
+    const decimalValue = document.getElementById("decimal-value");
+
+    slider.addEventListener("input", () => {
+      decimalValue.textContent = slider.value;
+    });
   }
 });
 
@@ -37,6 +45,7 @@ export async function run() {
     await Excel.run(async (context) => {
       const sheet = context.workbook.worksheets.getActiveWorksheet();
       const rangeInput = document.getElementById("range-input").value.trim();
+      const decimalPlaces = document.getElementById("decimal-slider").value; // Get decimal places from slider
       let range;
 
       if (rangeInput === "") {
@@ -52,7 +61,7 @@ export async function run() {
       await context.sync();
 
       const values = range.values;
-      const numericFormat = "0.00"; // Define the number format for numeric cells
+      const numericFormat = `0.${"0".repeat(decimalPlaces)}`; // Define the number format dynamically
 
       // Create a new matrix for number formats
       const updatedNumberFormat = values.map(row =>
@@ -63,7 +72,7 @@ export async function run() {
       range.numberFormat = updatedNumberFormat;
 
       await context.sync();
-      console.log("Updated numeric cells to 2 decimal places in the specified range.");
+      console.log(`Updated numeric cells to ${decimalPlaces} decimal places in the specified range.`);
     });
   } catch (error) {
     console.error(error);
