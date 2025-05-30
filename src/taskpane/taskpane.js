@@ -29,19 +29,15 @@ export async function run() {
 
       // Iterate through the cells and update number format for numeric cells
       const values = usedRange.values;
-      const numberFormat = usedRange.numberFormat;
+      const numericFormat = "0.00"; // Define the number format for numeric cells
 
-      for (let i = 0; i < values.length; i++) {
-        for (let j = 0; j < values[i].length; j++) {
-          if (typeof values[i][j] === "number") {
-            // Set the number format to display 2 decimal places
-            numberFormat[i][j] = "0.00";
-          }
-        }
-      }
+      // Create a new matrix for number formats
+      const updatedNumberFormat = values.map(row =>
+        row.map(cell => (typeof cell === "number" ? numericFormat : null))
+      );
 
-      // Apply the updated number formats
-      usedRange.numberFormat = numberFormat;
+      // Apply the updated number formats to the entire range
+      usedRange.numberFormat = updatedNumberFormat;
 
       await context.sync();
       console.log("Updated all numeric cells to 2 decimal places.");
