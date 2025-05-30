@@ -19,16 +19,32 @@ export async function run() {
       /**
        * Insert your Excel code here
        */
-      const range = context.workbook.getSelectedRange();
+      const sheet = context.workbook.worksheets.getActiveWorksheet();
+      const usedRange = sheet.getUsedRange();
 
-      // Read the range address
-      range.load("address");
-
-      // Update the fill color
-      range.format.fill.color = "yellow";
+      // Load the values and number formats of the used range
+      usedRange.load(["values", "numberFormat"]);
 
       await context.sync();
-      console.log(`The range address was ${range.address}.`);
+
+      // Iterate through the cells and update number format for numeric cells
+      const values = usedRange.values;
+      const numberFormat = usedRange.numberFormat;
+
+      for (let i = 0; i < values.length; i++) {
+        for (let j = 0; j < values[i].length; j++) {
+          if (typeof values[i][j] === "number") {
+            // Set the number format to display 2 decimal places
+            numberFormat[i][j] = "0.00";
+          }
+        }
+      }
+
+      // Apply the updated number formats
+      usedRange.numberFormat = numberFormat;
+
+      await context.sync();
+      console.log("Updated all numeric cells to 2 decimal places.");
     });
   } catch (error) {
     console.error(error);
