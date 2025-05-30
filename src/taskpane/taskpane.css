@@ -78,3 +78,12 @@
 b {
     font-weight: bold;
 }
+
+.hidden {
+    display: none;
+}
+
+.validation-message {
+    color: red;
+    margin-left: 10px;
+}

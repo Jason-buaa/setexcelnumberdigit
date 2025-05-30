@@ -2,7 +2,7 @@
 <!-- This file shows how to design a first-run page that provides a welcome screen to the user about the features of the add-in. -->
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
     <meta charset="UTF-8" />
@@ -26,9 +26,9 @@
         <h1 class="ms-font-su">Welcome</h1>
     </header>
     <section id="sideload-msg" class="ms-welcome__main">
-        <h2 class="ms-font-xl">Please <a target="_blank" href="https://learn.microsoft.com/office/dev/add-ins/testing/test-debug-office-add-ins#sideload-an-office-add-in-for-testing">sideload</a> your add-in to see app body.</h2>
+        <h2 class="ms-font-xl">Please <a target="_blank" rel="noopener noreferrer" href="https://learn.microsoft.com/office/dev/add-ins/testing/test-debug-office-add-ins#sideload-an-office-add-in-for-testing">sideload</a> your add-in to see app body.</h2>
     </section>
-    <main id="app-body" class="ms-welcome__main" style="display: none;">
+    <main id="app-body" class="ms-welcome__main hidden">
         <h2 class="ms-font-xl"> Discover what Office Add-ins can do for you today! </h2>
         <ul class="ms-List ms-welcome__features">
             <li class="ms-ListItem">
@@ -50,7 +50,7 @@
         <div>
             <label for="range-input" class="ms-font-m">Enter range (e.g., A1:B10):</label>
             <input type="text" id="range-input" class="ms-TextField-field" placeholder="A1:B10" />
-            <span id="range-validation" class="ms-font-m" style="color: red; margin-left: 10px;"></span>
+            <span id="range-validation" class="ms-font-m validation-message"></span>
         </div>
 
         <div role="button" id="run" class="ms-welcome__action ms-Button ms-Button--hero ms-font-xl">
