@@ -45,6 +45,14 @@
             </li>
         </ul>
         <p class="ms-font-l">Modify the source files, then click <b>Run</b>.</p>
+
+        <!-- Input field for range -->
+        <div>
+            <label for="range-input" class="ms-font-m">Enter range (e.g., A1:B10):</label>
+            <input type="text" id="range-input" class="ms-TextField-field" placeholder="A1:B10" />
+            <span id="range-validation" class="ms-font-m" style="color: red; margin-left: 10px;"></span>
+        </div>
+
         <div role="button" id="run" class="ms-welcome__action ms-Button ms-Button--hero ms-font-xl">
             <span class="ms-Button-label">Run</span>
         </div>
