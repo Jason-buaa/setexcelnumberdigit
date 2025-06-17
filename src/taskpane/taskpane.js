@@ -34,6 +34,28 @@ Office.onReady((info) => {
     slider.addEventListener("input", () => {
       decimalValue.textContent = slider.value;
     });
+
+    // Add event listener for selection change in the worksheet
+    Excel.run(async (context) => {
+      const sheet = context.workbook.worksheets.getActiveWorksheet();
+
+      sheet.onSelectionChanged.add(async (eventArgs) => {
+        try {
+          const selectedRange = sheet.getRange(eventArgs.address);
+          selectedRange.load("address");
+          await context.sync();
+
+          // Update the range input with the selected range address
+          rangeInput.value = selectedRange.address;
+          validationMessage.textContent = "Valid range";
+          validationMessage.style.color = "green";
+        } catch (error) {
+          console.error("Error updating range input:", error);
+        }
+      });
+
+      await context.sync();
+    });
   }
 });
 
